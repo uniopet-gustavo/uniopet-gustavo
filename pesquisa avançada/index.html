@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Formulário de Pesquisa Avançada</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap">
+  <style>
+     body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center; /* Centraliza o conteúdo horizontalmente */
+      margin: 0 10px; /* Margem lateral de 40 pixels */
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      color: #fff;
+    }
+
+    .form-container {
+      background-color: #6BB7BF;
+      padding: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    /* TEXTOS */
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #fdfdfd;
+    }
+
+    select, input[type="range"], textarea {
+      width: 100%;
+      padding: 8px 12px;
+      border-radius: 4px;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      font-size: 14px;
+      color: rgba(0, 0, 0, 0.87);
+      background-color: #fff;
+      box-sizing: border-box;
+    }
+
+    select:focus, input[type="range"]:focus, textarea:focus {
+      outline: none;
+      border-color: #4CAF50;
+    }
+
+    .textarea-wrapper {
+      margin-top: 10px;
+    }
+
+    .textarea-wrapper label {
+      font-weight: normal;
+    }
+
+    .submit-btn {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 4px;
+    }
+
+    .submit-btn:hover {
+      background-color: #45a049;
+    }
+
+    .profile-container {
+      background-color: #f5f5f5;
+      padding: 20px;
+    }
+
+    .profile {
+      background-color: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .profile h3 {
+      margin-top: 0;
+    }
+
+    .profile p {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h1>Formulário de Pesquisa Avançada</h1>
+    <form id="search-form" onsubmit="event.preventDefault(); showProfiles()">
+      <div class="form-group">
+        <label for="servico">Serviço Oferecido:</label>
+        <select id="servico" name="servico">
+          <option value="pethsop">Pethsop</option>
+          <option value="pethouse">Pethouse</option>
+          <option value="petpasseio">Pet Passeio</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="tamanho">Qual o tamanho do seu pet?</label>
+        <select id="tamanho" name="tamanho">
+          <option value="ate5kg">Até 5kg</option>
+          <option value="5a10kg">5 a 10kg</option>
+          <option value="10a15kg">10 a 15kg</option>
+          <option value="15a20kg">15 a 20kg</option>
+          <option value="mais20kg">Mais de 20kg</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="preco">Faixa de Preço:</label>
+        <input type="range" id="preco" name="preco" min="0" max="250">
+      </div>
+
+      <div class="form-group">
+        <label for="sexo">Qual o sexo do seu pet?</label>
+        <select id="sexo" name="sexo">
+          <option value="macho">Macho</option>
+          <option value="femea">Fêmea</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="castrado">Seu pet é castrado?</label>
+        <select id="castrado" name="castrado">
+          <option value="sim">Sim</option>
+          <option value="nao">Não</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="cuidado-especial">Seu pet precisa de algum cuidado especial?</label>
+        <select id="cuidado-especial" name="cuidado-especial" onchange="toggleTextArea(this)">
+          <option value="nao">Não</option>
+          <option value="sim">Sim</option>
+        </select>
+        <div class="textarea-wrapper" id="textarea-wrapper" style="display: none;">
+          <label for="cuidado-descricao">Descreva o cuidado especial (máximo de 350 caracteres):</label>
+          <textarea id="cuidado-descricao" name="cuidado-descricao" maxlength="350"></textarea>
+        </div>
+      </div>
+
+      <input type="submit" value="Buscar" class="submit-btn">
+    </form>
+  </div>
+
+  <div class="profile-container" id="profile-container" style="display: none;">
+    <h2>Resultados da Pesquisa</h2>
+    <div class="profile" id="profile1" style="display: none;">
+      <img src="profile1.jpg" alt="Profile 1">
+      <h3>Nome do Colaborador 1</h3>
+      <p>Idade: 30 anos</p>
+      <p>Experiência: 5 anos</p>
+    </div>
+    <div class="profile" id="profile2" style="display: none;">
+      <img src="profile2.jpg" alt="Profile 2">
+      <h3>Nome do Colaborador 2</h3>
+      <p>Idade: 28 anos</p>
+      <p>Experiência: 3 anos</p>
+    </div>
+    <div class="profile" id="profile3" style="display: none;">
+      <img src="profile3.jpg" alt="Profile 3">
+      <h3>Nome do Colaborador 3</h3>
+      <p>Idade: 32 anos</p>
+      <p>Experiência: 7 anos</p>
+    </div>
+  </div>
+
+  <script>
+    function toggleTextArea(selectElement) {
+      var textareaWrapper = document.getElementById('textarea-wrapper');
+      textareaWrapper.style.display = (selectElement.value === 'sim') ? 'block' : 'none';
+    }
+
+    function showProfiles() {
+      var profileContainer = document.getElementById('profile-container');
+      var selectedService = document.getElementById('servico').value;
+      var selectedSize = document.getElementById('tamanho').value;
+      var selectedSex = document.getElementById('sexo').value;
+      var selectedCastrado = document.getElementById('castrado').value;
+
+      // Resetar visibilidade dos perfis
+      var profiles = document.getElementsByClassName('profile');
+      for (var i = 0; i < profiles.length; i++) {
+        profiles[i].style.display = 'none';
+      }
+
+      // Filtrar e exibir perfis com base nas opções selecionadas
+      if (selectedSex === 'macho') {
+        document.getElementById('profile1').style.display = 'block';
+      } else if (selectedSex === 'femea') {
+        document.getElementById('profile2').style.display = 'block';
+        document.getElementById('profile3').style.display = 'block';
+      }
+
+      profileContainer.style.display = 'block';
+    }
+  </script>
+</body>
+</html>
